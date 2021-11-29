@@ -1,6 +1,4 @@
-
 package com.curso.springboot.config;
-
 
 import com.curso.springboot.entity.User;
 import com.curso.springboot.repositories.UserRepository;
@@ -18,7 +16,8 @@ import org.springframework.boot.CommandLineRunner;
 @Configuration
 // Para avisar que essa é uma classe específica de teste usamos a anotation (@Profile())
 @Profile("test")
-public class TestConfig implements CommandLineRunner{
+public class TestConfig implements CommandLineRunner {
+
     @Autowired
     private UserRepository userRepository;
     User user = new User(null, "Evandro", "evandro@hotmail.com", "1234");
@@ -26,8 +25,7 @@ public class TestConfig implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        userRepository.saveAll(Arrays.asList(user,user1));
+        userRepository.saveAll(Arrays.asList(user, user1));
     }
-    
-    
+
 }

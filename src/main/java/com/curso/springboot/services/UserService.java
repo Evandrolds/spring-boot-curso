@@ -1,4 +1,3 @@
-
 package com.curso.springboot.services;
 
 import com.curso.springboot.entity.User;
@@ -15,15 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService {
+
     @Autowired  // Para o spring fazer a INJEÇÃO DE DEPENDENCIA
     private UserRepository repository;
-    
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return repository.findAll();
     }
-    
-    public User findById(long id){
+
+    public User findById(long id) {
         Optional<User> user = repository.findById(id);
         return user.get();
     }
