@@ -1,5 +1,6 @@
 package com.curso.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_user")
+
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,6 +29,7 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String password;
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private final List<Order> ordersUser = new ArrayList<>();
 
@@ -35,6 +38,9 @@ public class User implements Serializable {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public User() {
     }
 
     public Long getId() {

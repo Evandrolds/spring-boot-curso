@@ -1,7 +1,10 @@
 package com.curso.springboot.config;
 
+import com.curso.springboot.entity.Order;
 import com.curso.springboot.entity.User;
+import com.curso.springboot.repositories.OrderRepository;
 import com.curso.springboot.repositories.UserRepository;
+import java.time.Instant;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,12 +23,20 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private UserRepository userRepository;
-    User user = new User(null, "Evandro", "evandro@hotmail.com", "1234");
-    User user1 = new User(null, "Saandro", "sandro@hotmail.com", "7894");
+    User user1 = new User(null, "Evandro", "evandro@hotmail.com", "1234");
+    User user2 = new User(null, "Saandro", "sandro@hotmail.com", "7894");
+    User user3 = new User(null, "Samuel", "samuel@hotmail.com", "6587");
+
+    @Autowired
+    private OrderRepository orderRepository;
+    Order order = new Order(null, Instant.parse("2021-06-20T19:53:07Z"), user1);
+    Order order1 = new Order(null, Instant.parse("2021-07-21T03:42:10Z"), user2);
+    Order order2 = new Order(null, Instant.parse("2021-07-22T15:21:22Z"), user3);
 
     @Override
     public void run(String... args) throws Exception {
-        userRepository.saveAll(Arrays.asList(user, user1));
+        userRepository.saveAll(Arrays.asList(user1, user2, user3));
+        orderRepository.saveAll(Arrays.asList(order, order1, order2));
     }
 
 }
