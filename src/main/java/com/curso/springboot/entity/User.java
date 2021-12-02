@@ -1,5 +1,6 @@
 package com.curso.springboot.entity;
 
+import com.curso.springboot.entity.enums.OrdemStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,9 +33,11 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private final List<Order> ordersUser = new ArrayList<>();
+    
 
     public User(Long id, String name, String email, String password) {
         this.id = id;
+       
         this.name = name;
         this.email = email;
         this.password = password;
@@ -103,5 +106,7 @@ public class User implements Serializable {
         }
         return true;
     }
+
+   
 
 }

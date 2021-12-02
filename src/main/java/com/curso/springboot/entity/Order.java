@@ -4,6 +4,7 @@
  */
 package com.curso.springboot.entity;
 
+import com.curso.springboot.entity.enums.OrdemStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.Instant;
@@ -35,14 +36,16 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+    private Integer ordemStatus;
 
     public Order() {
     }
 
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment,OrdemStatus ordemStatus, User client) {
         this.id = id;
         this.moment = moment;
         this.client = client;
+        setOrdemStatus(ordemStatus);
     }
 
     public Long getId() {
@@ -92,6 +95,16 @@ public class Order implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public OrdemStatus getOrdemStatus() {
+        return OrdemStatus.valueOf(ordemStatus);
+    }
+
+    public void setOrdemStatus(OrdemStatus ordemStatus) {
+        if(ordemStatus != null){
+        this.ordemStatus = ordemStatus.getCodeStatus();
+        }
     }
 
 }

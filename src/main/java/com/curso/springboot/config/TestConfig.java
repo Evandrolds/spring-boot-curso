@@ -2,6 +2,7 @@ package com.curso.springboot.config;
 
 import com.curso.springboot.entity.Order;
 import com.curso.springboot.entity.User;
+import com.curso.springboot.entity.enums.OrdemStatus;
 import com.curso.springboot.repositories.OrderRepository;
 import com.curso.springboot.repositories.UserRepository;
 import java.time.Instant;
@@ -29,9 +30,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private OrderRepository orderRepository;
-    Order order = new Order(null, Instant.parse("2021-06-20T19:53:07Z"), user1);
-    Order order1 = new Order(null, Instant.parse("2021-07-21T03:42:10Z"), user2);
-    Order order2 = new Order(null, Instant.parse("2021-07-22T15:21:22Z"), user3);
+    Order order = new Order(null, Instant.parse("2021-06-20T19:53:07Z"),OrdemStatus.WEINTING_PAIMENT, user1);
+    Order order1 = new Order(null, Instant.parse("2021-07-21T03:42:10Z"),OrdemStatus.CANCELED, user2);
+    Order order2 = new Order(null, Instant.parse("2021-07-22T15:21:22Z"),OrdemStatus.CHIPPED, user3);
 
     @Override
     public void run(String... args) throws Exception {
