@@ -1,6 +1,6 @@
 package com.curso.springboot.resources;
 
-import com.curso.springboot.entity.Order;
+import com.curso.springboot.entities.Order;
 import com.curso.springboot.services.OrderService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Evandro
  */
 // avisando o tipo da aplicação q será usada
-@RestController
-// aplicando um mapeamento
+@RestController                    // aplicando um mapeamento                 
 @RequestMapping(value = "/orders")
 public class OrderResource {
 

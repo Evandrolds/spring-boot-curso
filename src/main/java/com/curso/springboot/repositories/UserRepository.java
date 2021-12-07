@@ -1,6 +1,6 @@
 
 package com.curso.springboot.repositories;
-import com.curso.springboot.entity.User;
+import com.curso.springboot.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

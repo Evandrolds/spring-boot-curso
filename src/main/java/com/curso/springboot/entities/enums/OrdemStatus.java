@@ -1,5 +1,5 @@
 
-package com.curso.springboot.entity.enums;
+package com.curso.springboot.entities.enums;
 
 /**
  *

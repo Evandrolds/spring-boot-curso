@@ -1,6 +1,6 @@
 package com.curso.springboot.services;
 
-import com.curso.springboot.entity.User;
+import com.curso.springboot.entities.User;
 import com.curso.springboot.repositories.UserRepository;
 import java.util.List;
 import java.util.Optional;
@@ -14,15 +14,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Autowired  // Para o spring fazer a INJEÇÃO DE DEPENDENCIA
-    private UserRepository repository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<User> findAll() {
-        return repository.findAll();
+        return userRepository.findAll();
     }
 
-    public User findById(long id) {
-        Optional<User> user = repository.findById(id);
-        return user.get();
+    public User findById(Long id) {
+        Optional<User> u =  userRepository.findById(id);
+        return u.get();
     }
 }

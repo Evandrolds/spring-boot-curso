@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.curso.springboot.entity;
+package com.curso.springboot.entities;
 
-import com.curso.springboot.entity.enums.OrdemStatus;
+import com.curso.springboot.entities.enums.OrdemStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.Instant;
