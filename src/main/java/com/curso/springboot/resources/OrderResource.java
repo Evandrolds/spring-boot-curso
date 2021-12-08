@@ -25,8 +25,8 @@ public class OrderResource {
     //metodo que respondo a requissição do HTTP
     @GetMapping
     public ResponseEntity<List<Order>> findAll() {
-        List<Order> list = orderService.findAll();
-        return ResponseEntity.ok().body(list);
+        List<Order> or = orderService.findAll();
+        return ResponseEntity.ok().body(or);
     }
 
     @GetMapping(value = "/{id}") //paramentro que será usado na requisição HTTP do postman

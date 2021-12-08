@@ -1,5 +1,6 @@
 package com.curso.springboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,29 +17,35 @@ import javax.persistence.Transient;
  * @author Evandro
  */
 @Entity
-@Table(name = "tb_category")
-public class Category implements Serializable {
+@Table(name = "tb_product")
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Double price;
     private String name;
+    private String descricao;
+    private String imgUrl;
     
     @Transient
-    private Set<Product> produts = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
-    public Set<Product> getProduts() {
-        return produts;
+    public Product() {
     }
 
-    public Category(Long id, String name) {
+    public Product(Long id, Double price, String name, String descricao, String imgUrl) {
         this.id = id;
+        this.price = price;
         this.name = name;
+        this.descricao = descricao;
+        this.imgUrl = imgUrl;
+        
     }
 
-    public Category() {
-
+    private Set<Category> getCategory() {
+        return this.categories;
     }
 
     public Long getId() {
@@ -49,6 +56,14 @@ public class Category implements Serializable {
         this.id = id;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     public String getName() {
         return name;
     }
@@ -57,10 +72,26 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -75,7 +106,7 @@ public class Category implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Category other = (Category) obj;
+        final Product other = (Product) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

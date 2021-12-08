@@ -2,10 +2,12 @@ package com.curso.springboot.config;
 
 import com.curso.springboot.entities.Category;
 import com.curso.springboot.entities.Order;
+import com.curso.springboot.entities.Product;
 import com.curso.springboot.entities.User;
 import com.curso.springboot.entities.enums.OrdemStatus;
 import com.curso.springboot.repositories.CategoryRepository;
 import com.curso.springboot.repositories.OrderRepository;
+import com.curso.springboot.repositories.ProductReposiry;
 import com.curso.springboot.repositories.UserRepository;
 import java.time.Instant;
 import java.util.Arrays;
@@ -31,6 +33,12 @@ public class TestConfig implements CommandLineRunner {
     Category cat3 = new Category(null, "Books");
 
     @Autowired
+    private ProductReposiry productRepository;
+    Product pro1 = new Product(null, 65.40, "Matelo", "Ferramenta", "www.ferramentas.com.br");
+    Product pro2 = new Product(null, 420.30, "Cerra Marmore", "Eletronico", "www.ferramentas.com.br");
+    Product pro3 = new Product(null, 260.25, "Furadeira", "Ferramenta", "www.ferramentas.com.br");
+
+    @Autowired
     private UserRepository userRepository;
     User user1 = new User(null, "Evandro", "evandro@hotmail.com", "1234");
     User user2 = new User(null, "Saandro", "sandro@hotmail.com", "7894");
@@ -47,6 +55,7 @@ public class TestConfig implements CommandLineRunner {
         userRepository.saveAll(Arrays.asList(user1, user2, user3));
         orderRepository.saveAll(Arrays.asList(order, order1, order2));
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+        productRepository.saveAll(Arrays.asList(pro1, pro2, pro3));
 
     }
 
