@@ -1,6 +1,5 @@
 package com.curso.springboot.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -9,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  *
@@ -28,8 +29,11 @@ public class Product implements Serializable {
     private String name;
     private String descricao;
     private String imgUrl;
-    
-    @Transient
+
+    @ManyToMany
+    @JoinTable(name = "tb_product_category", // criando a tabela de associação de product com a category
+            joinColumns = @JoinColumn(name = "produc_id"), // criando a união das chave estrangeira de Product com category
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     public Product() {
@@ -41,11 +45,10 @@ public class Product implements Serializable {
         this.name = name;
         this.descricao = descricao;
         this.imgUrl = imgUrl;
-        
-    }
 
-    private Set<Category> getCategory() {
-        return this.categories;
+    }
+    public Set<Category> getCategories() {
+        return categories;
     }
 
     public Long getId() {
@@ -112,5 +115,7 @@ public class Product implements Serializable {
         }
         return true;
     }
+
+    
 
 }
