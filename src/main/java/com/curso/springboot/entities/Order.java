@@ -2,15 +2,19 @@ package com.curso.springboot.entities;
 
 import com.curso.springboot.entities.enums.OrdemStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,24 +30,31 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //Timezone  do padão UTC do horário universal de Granuite longitude 0
+    //Timezone  do padão UTC
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
     private Integer ordemStatus;
-
+    
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+    
+    
     public Order() {
     }
 
-    public Order(Long id, Instant moment,OrdemStatus ordemStatus, User client) {
+    public Order(Long id, Instant moment, User client) {
         this.id = id;
         this.moment = moment;
         this.client = client;
-        setOrdemStatus(ordemStatus);
+       
     }
-
+    @JsonIgnore
+    public Set<OrderItem> getItems(){
+        return items;
+    }
     public Long getId() {
         return id;
     }
@@ -98,8 +109,8 @@ public class Order implements Serializable {
     }
 
     public void setOrdemStatus(OrdemStatus ordemStatus) {
-        if(ordemStatus != null){
-        this.ordemStatus = ordemStatus.getCodeStatus();
+        if (ordemStatus != null) {
+            this.ordemStatus = ordemStatus.getCodeStatus();
         }
     }
 

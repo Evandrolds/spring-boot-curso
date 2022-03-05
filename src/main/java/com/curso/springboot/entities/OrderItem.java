@@ -1,13 +1,11 @@
 package com.curso.springboot.entities;
 
-import com.curso.springboot.entities.pk.OrderItemPK;
+import com.curso.springboot.entities.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -19,36 +17,49 @@ import javax.persistence.Table;
 public class OrderItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPk id = new OrderItemPk();
     private Integer quantity;
     private Double price;
 
-    public OrderItem(Product product, Order order,Integer quantity, Double price) {
-
-        this.quantity = quantity;
-        this.price = price;
-        id.setOrderItemPk(order);
-        id.setProductItemPk(product);
-    }
-    public Order getOrder(){
-        return id.getOrderItemPk();
-    }
-    public void setOrder(Order order){
-        id.setOrderItemPk(order);
-    }
-    public Product getProduct(){
-        return id.getProductItemPk();
-    }
-    public void setProduct(Product product){
-        id.setProductItemPk(product);
-    }
     public OrderItem() {
     }
 
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
+        this.quantity = quantity;
+        this.price = price;
+        id.setOrder(order);
+        id.setProduct(product);
+    }
+
+  
+    public Order getOrder() {
+        return id.getOrder();
+    }
+
+    public void setOrder(Order order) {
+        id.setOrder(order);
+    }
+
+    public Product getProduct() {
+        return id.getProduct();
+    }
+
+    public void setProduct(Product product) {
+        id.setProduct(product);
+    }
+
+    public OrderItemPk getId() {
+        return this.id;
+    }
+
+    public void setId(OrderItemPk id) {
+        this.id = id;
+    }
+
     public Integer getQuantity() {
-        return quantity;
+        return this.quantity;
     }
 
     public void setQuantity(Integer quantity) {
@@ -65,8 +76,8 @@ public class OrderItem implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -87,7 +98,5 @@ public class OrderItem implements Serializable {
         }
         return true;
     }
-
-   
 
 }
