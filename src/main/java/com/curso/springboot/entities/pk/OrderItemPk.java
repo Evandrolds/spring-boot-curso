@@ -2,7 +2,6 @@ package com.curso.springboot.entities.pk;
 
 import com.curso.springboot.entities.Order;
 import com.curso.springboot.entities.Product;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Embeddable;

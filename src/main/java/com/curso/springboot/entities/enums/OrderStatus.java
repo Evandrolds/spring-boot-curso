@@ -5,7 +5,7 @@ package com.curso.springboot.entities.enums;
  *
  * @author Evandro
  */
-public enum OrdemStatus {
+public enum OrderStatus {
    WEINTING_PAIMENT(1),
    PAD(2),
    CHIPPED(3),
@@ -14,14 +14,14 @@ public enum OrdemStatus {
    
    private int code;
    
-   private OrdemStatus (int code){
+   private OrderStatus (int code){
        this.code = code;
    }
     public int getCodeStatus(){
         return code;
     }
-    public static OrdemStatus valueOf (int codeStatus){
-        for(OrdemStatus ordem : OrdemStatus.values()){
+    public static OrderStatus valueOf (int codeStatus){
+        for(OrderStatus ordem : OrderStatus.values()){
             if(ordem.getCodeStatus()== codeStatus){
                 return ordem;
             }

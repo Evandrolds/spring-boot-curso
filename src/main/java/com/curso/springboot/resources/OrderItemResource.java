@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Evandro
  */
-// avisando o tipo da aplicação q será usada
 @RestController                    // aplicando um mapeamento                 
-@RequestMapping("/orders")
-public class OrderResource {
-
-    @Autowired // informando ao spring para fazer a INJEÇÃO DE DEPENDENCIA
+@RequestMapping(value = "/itens")
+public class OrderItemResource {
+     @Autowired // informando ao spring para fazer a INJEÇÃO DE DEPENDENCIA
     private OrderService orderService;
 
     //metodo que respondo a requissição do HTTP
@@ -29,7 +27,7 @@ public class OrderResource {
         return ResponseEntity.ok().body(or);
     }
 
-    @GetMapping("/{id}") //paramentro que será usado na requisição HTTP do postman
+    @GetMapping(value = "/{id}") //paramentro que será usado na requisição HTTP do postman
     public ResponseEntity<Order> findById(@PathVariable Long id) {
         Order or = orderService.findById(id);
         return ResponseEntity.ok().body(or);

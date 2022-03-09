@@ -1,6 +1,6 @@
 package com.curso.springboot.entities;
 
-import com.curso.springboot.entities.enums.OrdemStatus;
+import com.curso.springboot.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -27,34 +29,54 @@ public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
+        this.id = id;
+        this.moment = moment;
+        this.orderStatus = orderStatus;
+        this.client = client;
+    }
+
+    public Order() {
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
+    private Payment payment;
+    private OrderStatus orderStatus;
+    @OneToMany(mappedBy = "id.order")
+
+    private Set<OrderItem> items = new HashSet<>();
+
     //Timezone  do padão UTC
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
-    private Integer ordemStatus;
-    
-    @OneToMany(mappedBy = "id.order")
-    private Set<OrderItem> items = new HashSet<>();
-    
-    
-    public Order() {
-    }
 
-    public Order(Long id, Instant moment, User client) {
-        this.id = id;
-        this.moment = moment;
-        this.client = client;
-       
-    }
     @JsonIgnore
-    public Set<OrderItem> getItems(){
+    public Set<OrderItem> getItems() {
         return items;
     }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     public Long getId() {
         return id;
     }
@@ -102,16 +124,6 @@ public class Order implements Serializable {
             return false;
         }
         return true;
-    }
-
-    public OrdemStatus getOrdemStatus() {
-        return OrdemStatus.valueOf(ordemStatus);
-    }
-
-    public void setOrdemStatus(OrdemStatus ordemStatus) {
-        if (ordemStatus != null) {
-            this.ordemStatus = ordemStatus.getCodeStatus();
-        }
     }
 
 }

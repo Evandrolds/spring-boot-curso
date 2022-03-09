@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -36,8 +37,8 @@ public class Product implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    public Product() {
-    }
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     public Product(Long id, Double price, String name, String descricao, String imgUrl) {
         this.id = id;
@@ -47,8 +48,21 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
 
     }
+
+    public Product() {
+    }
+
     public Set<Category> getCategories() {
         return categories;
+    }
+
+    public Set<Order> getOrders() {
+        Set<Order> orderSet = new HashSet<>();
+        for (OrderItem obj : orderItems) {
+
+            orderSet.add(obj.getOrder());
+        }
+        return orderSet;
     }
 
     public Long getId() {
@@ -115,7 +129,5 @@ public class Product implements Serializable {
         }
         return true;
     }
-
-    
 
 }
