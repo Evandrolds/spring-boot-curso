@@ -1,5 +1,6 @@
 package com.curso.springboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -18,13 +19,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_payment")
 public class Payment implements Serializable {
- public static final long serialVersionUID = 1L;
+
+    public static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Instant moment;
+    @JsonIgnore
     @OneToOne // a associaçao é UM para UM
-    @MapsId // por ser uma classe dependente possue essa anotação 
+    @MapsId // por ser uma classe dependente possue essa anotação (MapsId)
     private Order order;
 
     public Payment(Long id, Instant moment, Order order) {
@@ -32,7 +35,10 @@ public class Payment implements Serializable {
         this.moment = moment;
         this.order = order;
     }
-
+    
+    public Payment() {
+    }
+    
     public Order getOrder() {
         return order;
     }
@@ -40,9 +46,7 @@ public class Payment implements Serializable {
     public void setOrder(Order order) {
         this.order = order;
     }
-
-    public Payment() {
-    }
+     
 
     public Long getId() {
         return id;

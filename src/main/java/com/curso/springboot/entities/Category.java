@@ -28,10 +28,10 @@ public class Category implements Serializable {
     
     @JsonIgnore
     @ManyToMany(mappedBy = "categories")
-    private Set<Product> produts = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
     public Set<Product> getProduts() {
-        return produts;
+        return products;
     }
 
     public Category(Long id, String name) {

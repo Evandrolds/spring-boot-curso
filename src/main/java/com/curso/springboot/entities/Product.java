@@ -1,5 +1,6 @@
 package com.curso.springboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -33,12 +34,12 @@ public class Product implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "tb_product_category", // criando a tabela de associação de product com a category
-            joinColumns = @JoinColumn(name = "produc_id"), // criando a união das chave estrangeira de Product com category
+            joinColumns = @JoinColumn(name = "product_id"), // criando a união das chave estrangeira de Product com category
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "id.product")
-    private Set<OrderItem> orderItems = new HashSet<>();
+    private Set<OrderItem> itens = new HashSet<>();
 
     public Product(Long id, Double price, String name, String descricao, String imgUrl) {
         this.id = id;
@@ -52,13 +53,14 @@ public class Product implements Serializable {
     public Product() {
     }
 
+    @JsonIgnore
     public Set<Category> getCategories() {
         return categories;
     }
 
     public Set<Order> getOrders() {
         Set<Order> orderSet = new HashSet<>();
-        for (OrderItem obj : orderItems) {
+        for (OrderItem obj : itens) {
 
             orderSet.add(obj.getOrder());
         }

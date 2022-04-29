@@ -14,16 +14,16 @@ public enum OrderStatus {
    
    private int code;
    
-   private OrderStatus (int code){
-       this.code = code;
+   private OrderStatus (int codeStatus){
+       this.code = codeStatus;
    }
     public int getCodeStatus(){
         return code;
     }
     public static OrderStatus valueOf (int codeStatus){
-        for(OrderStatus ordem : OrderStatus.values()){
-            if(ordem.getCodeStatus()== codeStatus){
-                return ordem;
+        for(OrderStatus order : OrderStatus.values()){
+            if(order.getCodeStatus()== codeStatus){
+                return order;
             }
         }
         throw new IllegalArgumentException("Invalid code, try another!");

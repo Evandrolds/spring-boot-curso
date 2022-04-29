@@ -29,23 +29,15 @@ public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
-        this.id = id;
-        this.moment = moment;
-        this.orderStatus = orderStatus;
-        this.client = client;
-    }
-
-    public Order() {
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
+ 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
+
     private OrderStatus orderStatus;
     @OneToMany(mappedBy = "id.order")
-
     private Set<OrderItem> items = new HashSet<>();
 
     //Timezone  do padão UTC
@@ -56,7 +48,17 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
-    @JsonIgnore
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
+        this.id = id;
+        this.moment = moment;
+        this.orderStatus = orderStatus;
+        this.client = client;
+    }
+
+    public Order() {
+    }
+
+   
     public Set<OrderItem> getItems() {
         return items;
     }
@@ -99,6 +101,14 @@ public class Order implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderItem obj : items) {
+            sum += obj.getSubTotal();
+        }
+        return sum;
     }
 
     @Override
