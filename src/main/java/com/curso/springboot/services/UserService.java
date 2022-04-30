@@ -2,10 +2,14 @@ package com.curso.springboot.services;
 
 import com.curso.springboot.entities.User;
 import com.curso.springboot.repositories.UserRepository;
+import com.curso.springboot.services.exceptions.DataBaseException;
 import com.curso.springboot.services.exceptions.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,9 +32,16 @@ public class UserService {
     }
     public User insert(User user){
         return userRepository.save(user);
+       
     }
     public void deleteById(Long id){
+         try{
         userRepository.deleteById(id);
+        }catch(EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        }catch( DataIntegrityViolationException e){
+           throw new DataBaseException(e.getMessage());// capturando exception do banco de dados
+        }
     }
     public User update(Long id,User user){
         User obj = userRepository.getById(id);
