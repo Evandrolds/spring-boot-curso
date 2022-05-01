@@ -6,6 +6,7 @@ import com.curso.springboot.services.exceptions.DataBaseException;
 import com.curso.springboot.services.exceptions.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -27,31 +28,38 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        Optional<User> u =  userRepository.findById(id);
-        return u.orElseThrow(()->  new ResourceNotFoundException(id));
+        Optional<User> u = userRepository.findById(id);
+        return u.orElseThrow(() -> new ResourceNotFoundException(id));
     }
-    public User insert(User user){
+
+    public User insert(User user) {
         return userRepository.save(user);
-       
+
     }
-    public void deleteById(Long id){
-         try{
-        userRepository.deleteById(id);
-        }catch(EmptyResultDataAccessException e){
+
+    public void deleteById(Long id) {
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id);
-        }catch( DataIntegrityViolationException e){
-           throw new DataBaseException(e.getMessage());// capturando exception do banco de dados
+        } catch (DataIntegrityViolationException e) {
+            throw new DataBaseException(e.getMessage());// capturando exception do banco de dados
         }
     }
-    public User update(Long id,User user){
-        User obj = userRepository.getById(id);
-        updateUser(obj,user);
-        return userRepository.save(userRepository.save(obj));
+
+    public User update(Long id, User user) {
+        try {
+            User obj = userRepository.getById(id);
+            updateUser(obj, user);
+            return userRepository.save(userRepository.save(obj));
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateUser(User obj, User user) {
         user.setName(obj.getName());
         user.setEmail(obj.getEmail());
-       
+
     }
 }
